@@ -1,0 +1,3 @@
+Git Bash es una aplicación que permite tener un entorno de líneas de comandos de Git, en esta podemos crear 
+ficheros, archivos, moverlos, editarlos, entre otras funcionalidades.
+

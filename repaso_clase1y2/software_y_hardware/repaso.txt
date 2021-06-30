@@ -1,0 +1,6 @@
+El hardware corresponde a cualquier componente físico cuya funcionalidad aumenta las capacidades de un computador o las permite,
+como el hardware interno (CPU, RAM, etc.) y los dispositivos de entrada (teclado, micrófono) y salida (pantalla, impresora).
+
+El software, por su parte, son los componentes lógicos, intangibles, que al ser implementados por el hardware logran que un 
+computador procece información y, así, satisfaga las demandas del usuario.
+

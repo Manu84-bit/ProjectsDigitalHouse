@@ -1,0 +1,5 @@
+Los servidores son computadoras que se dedican a atender las peticiones de un usuario. Los servidores pueden ser Web y
+almacenar archivos en HTML; también pueden existir servidores de bases de datos, que procesan peticiones de programas o ellos 
+mismos ejecutan programas. Finalmente, hay servidores de archivos, que almacena tipos de archivos para distribuirlos entre 
+clientes.
+

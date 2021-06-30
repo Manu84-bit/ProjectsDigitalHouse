@@ -1,0 +1,4 @@
+La historia de la informática puede rastrearse hasta tiempos remotos en la antigua China con la invención del ábaco,
+objeto que permitía realizar operaciones aritméticas básicas. El concepto de computador, como lo entendemos en nuestros días, 
+puede encontrarse en las ideas de Alan Turing, sus máquinas de Turing, recogen la definición de algoritmo, definición implementada
+en las máquinas de tarjetas inventadas más tarde y en los actuales y poderosos computadores.

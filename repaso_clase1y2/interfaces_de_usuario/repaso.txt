@@ -1,0 +1,10 @@
+Las interfaces de usuario son los espacios en los que interactúa el usuario humano con la máquina. Existen al menos tres tipos de
+interfaz de usuario:
+1. La interfaz de línea de comandos.
+2. La interfaz gráfica de usuario.
+3. La interfaz nativa de usuario.
+
+Las primeras procesan texto y permiten dar órdenes a la computadora a través de comandos escritos. La segunda, permite interactuar
+de manera intuitiva con el computador a través del uso de elementos como imágenes, íconos y otros componentes gráficos. Finalmente,
+la interfaz nativa es aquella que depende ampliamente del hardware de una máquina, como una pantalla táctil o los dispositivos de reconocimiento de voz, como el Google Home.
+
