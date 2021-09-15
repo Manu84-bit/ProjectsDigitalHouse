@@ -1,0 +1,32 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+
+div {
+    height: 2rem;
+    width: 15rem;
+    border-radius: 8px;
+    margin: 0.5rem;
+    padding-top: 0.3rem;
+}
+
+#apple_shelf {
+    background: crimson;
+}
+
+#orange_shelf {
+    background: goldenrod;
+}
