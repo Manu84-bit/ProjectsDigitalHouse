@@ -44,4 +44,45 @@ inner join rental on rental.rental_id = payment.rental_id where YEAR(RENTAL_DATE
 SELECT inventory_ID, COUNT(rental_ID) AS TOTAL FROM RENTAL GROUP BY inventory_ID ORDER BY TOTAL DESC;
 SELECT inventory_ID, COUNT(rental_ID) AS TOTAL FROM RENTAL GROUP BY inventory_ID ORDER BY TOTAL DESC LIMIT 5;
 
-SELECT * FROM address;
+#1. a) Crear una vista denominada “vista_mostrar_pais” que devuelva un reporte de los países. b) Invocar la vista creada.
+CREATE VIEW “vista_mostrar_pais” AS SELECT * FROM COUNTRY;
+SELECT * FROM  “vista_mostrar_pais”;
+
+#2. a) Crear una vista que devuelva un resumen con el apellido y nombre (en una sola columna denominada “artista”) de los artistas y la cantidad de
+#filmaciones que tienen. Traer solo aquellos que tengan más de 25 filmaciones y ordenarlos por apellido. b) Invocar la vista creada.
+#c) En la misma invocación de la vista, traer aquellos artistas que tienen menos de 33 filmaciones.
+#d) Con la misma sentencia anterior, ahora, mostrar el apellido y nombre de los artistas en minúsculas y traer solo aquellos artistas cuyo apellido
+#comience con la letra "a". e) Eliminar la vista creada.
+
+CREATE VIEW VIEW_ARTISTA AS
+SELECT ACTOR.ACTOR_ID, actor.first_name, actor.last_name, count(film_actor.film_id) as CANT FROM actor
+INNER JOIN film_actor ON film_actor.actor_id = actor.actor_id GROUP BY actor.actor_id 
+HAVING count(film_actor.film_id) > 25 ORDER BY ACTOR.last_name; 
+ALTER VIEW VIEW_ARTISTA AS SELECT ACTOR.ACTOR_ID, actor.first_name, actor.last_name, count(film_actor.film_id) as CANT FROM actor
+INNER JOIN film_actor ON film_actor.actor_id = actor.actor_id GROUP BY actor.actor_id 
+HAVING count(film_actor.film_id) < 33 ORDER BY ACTOR.last_name;
+
+ALTER VIEW VIEW_ARTISTA AS SELECT ACTOR.ACTOR_ID, lower(actor.first_name), lower(actor.last_name) FROM actor
+where actor.last_name like "a%" ORDER BY actor.actor_id;
+SELECT * from view_artista;
+
+DROP view view_artista;
+
+#3. a) Crear una vista que devuelva un reporte del título de la película, el apellido y nombre (en una sola columna denominada “artista”) 
+#de los artistas y el costo de reemplazo. Traer solo aquellas películas donde su costo de reemplazo es entre 15 y 27 dólares,
+#ordenarlos por costo de reemplazo. b) Invocar la vista creada. c) En la misma invocación de la vista, traer aquellas películas que comienzan
+#con la letra "b". d) Modificar la vista creada agregando una condición que traiga los artistas
+#cuyo nombre termine con la letra "a" y ordenarlos por mayor costo de reemplazo. e) Invocar la vista creada.
+
+CREATE VIEW film_view as
+SELECT film.title, concat(actor.first_name, " ", actor.last_name) as artista , film.replacement_cost FROM FILM
+INNER JOIN film_actor ON film_actor.film_id = film.film_id 
+INNER JOIN actor ON actor.actor_id = film_actor.actor_id WHERE film.replacement_cost BETWEEN 15 and 27;
+
+SELECT * FROM FILM_VIEW WHERE title LIKE "b%";
+ALTER VIEW FILM_VIEW AS
+SELECT film.title, concat(actor.first_name, " ", actor.last_name) as artista , film.replacement_cost FROM FILM
+INNER JOIN film_actor ON film_actor.film_id = film.film_id 
+INNER JOIN actor ON actor.actor_id = film_actor.actor_id WHERE actor.last_name like "%a" ORDER BY film.replacement_cost DESC;
+
+SELECT * from film_view;
