@@ -35,6 +35,18 @@ let concesionario = {
             }
         }
         return total
+    },
+
+    eliminarAuto(patent){
+        for(x of this.autos){
+            if (x.patente === patent){
+                let index = this.autos.indexOf(x)
+                this.autos.splice(index,1)
+            }else{
+                console.log("El carro con esa patente no está en el inventario")
+            }
+        }
+        jsonHelper.rescribirJson('AUTOS.json', this.autos)
     }
     
     
@@ -43,7 +55,7 @@ let concesionario = {
 // concesionario.agregarAuto("VolksWagen", "Jetta", 2000, 43330, "BDF454")
 // concesionario.venderAuto("WAV703")
 // console.log(concesionario.totalDeVentas())
-
+concesionario.eliminarAuto("DHP456")
 
 //Todo: 
 
