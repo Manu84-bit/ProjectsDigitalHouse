@@ -1,0 +1,114 @@
+[
+  {
+    "piloto": "Monah Lyal",
+    "patente": "ABC123",
+    "velocidad": 161,
+    "aceleracion": 0.31,
+    "anguloDeGiro": 272,
+    "cilindrada": 1500,
+    "peso": 1262.7,
+    "puntaje": 76,
+    "sancionado": false
+  },
+  {
+    "piloto": "Dita Skegg",
+    "patente": "ZKL654",
+    "velocidad": 216,
+    "aceleracion": 1.74,
+    "anguloDeGiro": 183,
+    "cilindrada": 1500,
+    "peso": 1750.01,
+    "puntaje": 42,
+    "sancionado": false
+  },
+  {
+    "piloto": "Belia Jozwicki",
+    "patente": "JOK851",
+    "velocidad": 191,
+    "aceleracion": 0.08,
+    "anguloDeGiro": 302,
+    "cilindrada": 2000,
+    "peso": 1556.74,
+    "puntaje": 25,
+    "sancionado": false
+  },
+  {
+    "piloto": "Kerry Creed",
+    "patente": "CJK912",
+    "velocidad": 170,
+    "aceleracion": 1.52,
+    "anguloDeGiro": 29,
+    "cilindrada": 1500,
+    "peso": 1720.72,
+    "puntaje": 84,
+    "sancionado": false
+  },
+  {
+    "piloto": "Chloette Redit",
+    "patente": "JHV223",
+    "velocidad": 204,
+    "aceleracion": 1.1,
+    "anguloDeGiro": 293,
+    "cilindrada": 1500,
+    "peso": 1542.14,
+    "puntaje": 81,
+    "sancionado": true
+  },
+
+  {
+    "piloto": "Eddie Fontelles",
+    "patente": "LKO710",
+    "velocidad": 242,
+    "aceleracion": 0.92,
+    "anguloDeGiro": 120,
+    "cilindrada": 2000,
+    "peso": 1269.19,
+    "puntaje": 66,
+    "sancionado": false
+  },
+
+  {
+    "piloto": "Pepillo Balfe",
+    "patente": "MMN771",
+    "velocidad": 183,
+    "aceleracion": 0.57,
+    "anguloDeGiro": 121,
+    "cilindrada": 1500,
+    "peso": 1609.01,
+    "puntaje": 89,
+    "sancionado": false
+  },
+  {
+    "piloto": "Anita Fosberry",
+    "patente": "ODS523",
+    "velocidad": 282,
+    "aceleracion": 1.09,
+    "anguloDeGiro": 73,
+    "cilindrada": 3000,
+    "peso": 1528.69,
+    "puntaje": 30,
+    "sancionado": false
+  },
+  {
+    "piloto": "Merline Tasch",
+    "patente": "JQK433",
+    "velocidad": 312,
+    "aceleracion": 1.76,
+    "anguloDeGiro": 38,
+    "cilindrada": 1500,
+    "peso": 1925.29,
+    "puntaje": 81,
+    "sancionado": false
+  },
+  {
+    "piloto": "Dilly Toulch",
+    "patente": "RGB159",
+    "velocidad": 280,
+    "aceleracion": 0.5,
+    "anguloDeGiro": 203,
+    "cilindrada": 1500,
+    "peso": 1378.04,
+    "puntaje": 79,
+    "sancionado": false
+  }
+]
