@@ -57,10 +57,12 @@ let carrera = {
     return sumaPeso / nuevaTanda.length;
   },
 
-  listarPodio: () => {
-    let ordenarPorPuntaje = carrera.autos.sort((a, b) => b.puntaje - a.puntaje);
+  listarPodio: (podio, cilindradaMax, pesoMax) => {
+    let ordenarPorPuntaje = carrera
+      .generarTanda(cilindradaMax, pesoMax)
+      .sort((a, b) => b.puntaje - a.puntaje);
 
-    let podio = ordenarPorPuntaje.slice(0, 3);
+    podio = ordenarPorPuntaje.slice(0, 3);
 
     console.log(
       `El ganador es: ${podio[0].piloto}, con un puntaje de ${podio[0].puntaje}. 

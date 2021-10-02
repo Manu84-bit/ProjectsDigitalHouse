@@ -57,8 +57,3 @@ let concesionario = {
 // console.log(concesionario.totalDeVentas())
 concesionario.eliminarAuto("DHP456")
 
-//Todo: 
-
-// Crea un método llamado eliminarAuto el cual deberá recibir una patente por parámetro y eliminar el vehículo
-// indicado. Investiga cómo podés hacer para poder eliminar un elemento en específico de un array. Luego deberás
-// actualizar la base de datos siguiendo los pasos para actualizar la lista como en puntos anteriores.
