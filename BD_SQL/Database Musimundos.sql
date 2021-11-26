@@ -402,3 +402,16 @@ SELECT MILISEGUNDOS, ID FROM CANCIONES ORDER BY MILISEGUNDOS LIMIT 1;
 
 SELECT * FROM libro l LEFT JOIN libro_x_autor lxa ON lxa.libro_id = l.id LEFT JOIN autor a ON a.id = lxa.autor_id;
 
+SELECT * from canciones;
+
+SELECT substring(upper(nombre),1, 10),  time_format(sec_to_time(milisegundos/1000), "%i:%s") AS minutos, 
+round(bytes/1000) AS kbytes, concat("$", FORMAT(precio_unitario,3)) AS precio,
+CASE
+    WHEN compositor is null  or compositor = "" then "<<Sin datos>>"
+	WHEN locate(",", compositor) !=0 then left(compositor, locate(",", compositor) -1)
+    ELSE compositor
+END AS COMPOSITOR
+FROM canciones;
+
+select nombre, bytes from canciones
+where bytes = (select max(bytes) from canciones);

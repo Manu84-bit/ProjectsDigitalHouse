@@ -3804,3 +3804,118 @@ LEFT JOIN facturas ON facturas.ClienteID =  clientes.clienteID GROUP BY clientes
 SELECT correos.correoID, correos.COMPANIA, COUNT(facturas.FacturaID) AS "Número de Facturas" FROM correos
 RIGHT JOIN facturas ON facturas.EnvioVia = correos.CorreoID GROUP BY correos.CorreoID;
 
+#CLIENTES
+#1. Crear una vista con los siguientes datos de los clientes: ID, contacto, y el Fax. 
+#En caso de que no tenga Fax, colocar el teléfono, pero aclarándolo. Por ejemplo: “TEL: (01) 123-4567”.
+
+ALTER VIEW CLIENTE_VIEW AS
+SELECT CLIENTEID, CONTACTO,
+CASE 
+	WHEN FAX IS NULL OR FAX = "" THEN CONCAT("TEL: ", TELEFONO)
+    ELSE FAX
+END AS 'NumContacto'
+FROM CLIENTES;
+SELECT CLIENTEID, CONTACTO, NumContacto FROM CLIENTE_VIEW;
+
+# 2. Se necesita listar los números de teléfono de los clientes que no tengan fax. Hacerlo de dos formas distintas: 
+#a. Consultando la tabla de clientes.
+#b. Consultando la vista de clientes.
+
+SELECT CLIENTEID, CONTACTO, FAX, TELEFONO FROM CLIENTES WHERE FAX IS NULL OR FAX = "";
+SELECT * FROM CLIENTE_VIEW WHERE NumContacto LIKE "%TEL%";
+
+-- Proveedores
+
+-- 1. Crear una vista con los siguientes datos de los proveedores: ID,
+-- contacto, compañía y dirección. Para la dirección tomar la dirección,
+-- ciudad, código postal y país.
+CREATE VIEW PROVEEDOR_VIEW AS 
+SELECT
+PROVEEDORID, CONTACTO, COMPANIA, CONCAT(DIRECCION, " ", CIUDAD, " ", CODIGOPOSTAL, " ", PAIS) AS DIR
+FROM
+PROVEEDORES;
+
+
+-- 2. Listar los proveedores que vivan en la calle Americanas en Brasil. Hacerlo
+-- de dos formas distintas:
+-- a. Consultando la tabla de proveedores.
+-- b. Consultando la vista de proveedores.
+SELECT PROVEEDORID, COMPANIA, CONCAT(DIRECCION, " ", CIUDAD, " ", CODIGOPOSTAL, " ", PAIS) AS DIR FROM PROVEEDORES WHERE
+ CONCAT(DIRECCION, " ", CIUDAD, " ", CODIGOPOSTAL, " ", PAIS) LIKE "%Americanas%Brazil%";
+SELECT * FROM proveedor_view WHERE DIR LIKE "%Americanas%Brazil%";
+
+-- Vistas - Parte II
+-- 1. Crear una vista de productos que se usará para control de stock. Incluir el ID
+-- y nombre del producto, el precio unitario redondeado sin decimales, las
+-- unidades en stock y las unidades pedidas. Incluir además una nueva
+-- columna PRIORIDAD con los siguientes valores:
+-- ■ BAJA: si las unidades pedidas son cero.
+-- ■ MEDIA: si las unidades pedidas son menores que las unidades
+-- en stock.
+-- ■ URGENTE: si las unidades pedidas no duplican el número de
+-- unidades.
+-- ■ SUPER URGENTE: si las unidades pedidas duplican el número
+-- de unidades en caso contrario.
+
+ALTER VIEW PRODUCTOS_VIEW AS
+SELECT 
+	PRODUCTOID, PRODUCTONOMBRE, ROUND(PRECIOUNITARIO) AS PRECIO, UNIDADESSTOCK, UNIDADESPEDIDAS,
+CASE
+	WHEN UNIDADESPEDIDAS = 0 THEN "BAJA"
+    WHEN UNIDADESPEDIDAS < UNIDADESSTOCK THEN "MEDIA"
+    WHEN UNIDADESPEDIDAS < (UNIDADESSTOCK*2) THEN "URGENTE"
+	WHEN UNIDADESPEDIDAS >= UNIDADESSTOCK*2 THEN "SUPER URGENTE"
+END AS PRIORIDAD
+FROM PRODUCTOS;
+
+-- 2. Se necesita un reporte de productos para identificar problemas de stock.
+-- Para cada prioridad indicar cuántos productos hay y su precio promedio.
+-- No incluir las prioridades para las que haya menos de 5 productos.
+SELECT * FROM productos_view;
+SELECT
+	PRIORIDAD, COUNT(UNIDADESSTOCK) AS CANTXPRIORIDAD, AVG(PRECIO) 
+FROM productos_view
+GROUP BY PRIORIDAD HAVING CANTXPRIORIDAD >= 5;
+
+
+-- Ejercicio 1
+-- 1. Crear una vista para poder organizar los envíos de las facturas. Indicar número
+-- de factura, fecha de la factura y fecha de envío, ambas en formato dd/mm/yyyy,
+-- valor del transporte formateado con dos decimales, y la información del
+-- domicilio del destino incluyendo dirección, ciudad, código postal y país, en una
+-- columna llamada Destino.
+
+ CREATE view envios_view as
+ select facturaID, date_format(FechaFactura, "%d/%m/%y") as fechaF, date_format(FechaEnvio, "%d/%m/%y") as fechaE, EnvioVia, truncate(transporte, 2),
+ concat(DireccionEnvio, " ", ciudadEnvio, " ", codigopostalenvio, " ", paisenvio) as Destino
+ from facturas f;
+
+
+
+
+-- 2. Realizar una consulta con todos los correos y el detalle de las facturas que
+-- usaron ese correo. Utilizar la vista creada.
+SELECT enviovia, facturaID, fechaF, fechaE, Destino from envios_view ORDER BY enviovia;
+
+-- 3. ¿Qué dificultad o problema encontrás en esta consigna? Proponer alguna
+-- alternativa o solución.
+-- La columna EnvioVia no estaba en las condiciones inicilaes. Se propone alterar la vista para incluir dicha columna.
+
+-- Ejercicio 2
+-- 1. Crear una vista con un detalle de los productos en stock. Indicar id, nombre del
+-- producto, nombre de la categoría y precio unitario.
+
+ALTER VIEW STOCK_VIEW AS
+SELECT P.PRODUCTOID, P.PRODUCTONOMBRE, C.CategoriaID, C.CATEGORIANOMBRE, P.UNIDADESSTOCK, P.PRECIOUNITARIO, P.UNIDADESPEDIDAS  FROM PRODUCTOS P
+INNER JOIN categorias C ON P.CategoriaID = C.CategoriaID WHERE P.UNIDADESSTOCK >= 1;
+
+
+-- 2. Escribir una consulta que liste el nombre y la categoría de todos los productos
+-- vendidos. Utilizar la vista creada.
+SELECT  PRODUCTOID, PRODUCTONOMBRE, categoriaID, CATEGORIANOMBRE, UNIDADESPEDIDAS FROM stock_view WHERE UNIDADESPEDIDAS >= 1;
+
+
+-- 3. ¿Qué dificultad o problema encontrás en esta consigna? Proponer alguna
+-- alternativa o solución.
+-- UNIDADES PEDIDAS NO ESTABA EN LAS CONDICIONES DE CREACIÓN DE LA VISTA, SE PROPONE ALTERAR LA VISTA PARA INCLUIRLA
+

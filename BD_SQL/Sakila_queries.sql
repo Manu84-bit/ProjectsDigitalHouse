@@ -86,3 +86,74 @@ INNER JOIN film_actor ON film_actor.film_id = film.film_id
 INNER JOIN actor ON actor.actor_id = film_actor.actor_id WHERE actor.last_name like "%a" ORDER BY film.replacement_cost DESC;
 
 SELECT * from film_view;
+
+-- 1. Generar un reporte que responda la pregunta: ¿cuáles son los diez clientes
+-- que más dinero gastan y en cuantos alquileres lo hacen?
+
+SELECT payment.customer_id, customer.last_name, count(payment.rental_id), sum(payment.amount) FROM payment 
+INNER JOIN customer ON customer.customer_id = payment.customer_id
+GROUP BY payment.customer_id ORDER BY sum(payment.amount) DESC LIMIT 10;
+
+
+-- 2. Generar un reporte que indique: el id del cliente, la cantidad de alquileres y
+-- el monto total para todos los clientes que hayan gastado más de 150 dólares
+-- en alquileres.
+SELECT payment.customer_id, customer.last_name, count(payment.rental_id), sum(payment.amount) as TOTAL FROM payment 
+INNER JOIN customer ON customer.customer_id = payment.customer_id 
+GROUP BY payment.customer_id HAVING TOTAL > 150 ORDER BY sum(payment.amount) DESC;
+
+
+-- 3. Generar un reporte que responda a la pregunta: ¿cómo se distribuyen la
+-- cantidad y el monto total de alquileres en los meses pertenecientes al año
+-- 2005? (tabla payment).
+SELECT payment.customer_id, count(payment.rental_id), sum(payment.amount) as TOTAL,  month(payment.payment_date) FROM payment 
+GROUP BY month(payment.payment_date);
+
+-- 4. Generar un reporte que responda a la pregunta: ¿cuáles son los 5 inventarios
+-- más alquilados? (columna inventory_id en la tabla rental) Para cada una de
+-- ellas, indicar la cantidad de alquileres.
+
+SELECT rental.inventory_id, count(rental.rental_id) AS cant_rental 
+FROM rental 
+GROUP BY rental.inventory_id ORDER BY cant_rental DESC limit 5;
+
+-- 1. Generar un reporte que responda a la pregunta: Para cada tienda
+-- (store), ¿cuál es la cantidad de alquileres y el monto total del dinero
+-- recaudado por mes?
+
+SELECT store.store_id, count(payment.rental_id), sum(payment.amount), MONTH(payment.payment_date) as mes from payment
+INNER JOIN staff on payment.staff_id = staff.staff_id
+INNER JOIN store on store. store_id = staff.staff_id GROUP BY store.store_id, mes;
+
+-- 2. Generar un reporte que responda a la pregunta: ¿cuáles son las 10 películas
+-- que generan más ingresos? ¿ Y cuáles son las que generan menos ingresos?
+-- Para cada una de ellas indicar la cantidad de alquileres.
+
+SELECT film.film_id, film.title, SUM(payment.amount) AS INGRESOS, count(payment.rental_id) from payment
+INNER JOIN rental ON payment.rental_id = rental.rental_id
+INNER JOIN inventory on inventory.inventory_id = rental.inventory_id
+INNER JOIN film on film.film_id = inventory.film_id 
+GROUP BY film.film_id ORDER BY INGRESOS DESC LIMIT 10;
+
+SELECT film.film_id, film.title, SUM(payment.amount) AS INGRESOS, count(payment.rental_id) cant_rentas from film
+LEFT join inventory on film.film_id = inventory.film_id
+LEFT join rental on inventory.inventory_id = rental.inventory_id
+LEFT JOIN payment ON payment.rental_id = rental.rental_id
+GROUP BY film.film_id ORDER BY ingresos;
+
+
+-- 3. ¿Existen clientes que no hayan alquilado películas?
+SELECT customer.customer_ID, count(rental.rental_id) as cant_rentas from customer
+LEFT JOIN rental on customer.customer_id = rental.customer_id GROUP BY customer.customer_id having cant_rentas = 0;
+
+
+-- 4. Nivel avanzado: El jefe de stock quiere discontinuar las películas (film) con
+-- menos alquileres (rental). ¿Qué películas serían candidatas a discontinuar?
+-- Recordemos que pueden haber películas con 0 (Cero) alquileres.
+SELECT film.film_id, film.title, SUM(payment.amount) AS INGRESOS, count(payment.rental_id) cant_rentas from film
+LEFT join inventory on film.film_id = inventory.film_id
+LEFT join rental on inventory.inventory_id = rental.inventory_id
+LEFT JOIN payment ON payment.rental_id = rental.rental_id
+GROUP BY film.film_id ORDER BY cant_rentas;
+
+
