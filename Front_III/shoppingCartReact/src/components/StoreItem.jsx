@@ -16,7 +16,7 @@ const quantity = getItemQuantity(id)
         <img src={thumbnail} alt={title} /> <Link>Ver detalle</Link>
       </div>
       <h4>{title}</h4>
-      <h5>{formatCurrency(price)}</h5>
+      <h5>${formatCurrency(price)}</h5>
       <div className="card-btns">
         {quantity < 1 ? (
           <button id="add-btn" onClick={() =>{

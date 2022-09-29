@@ -1,20 +1,10 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
+import { useContext} from "react"
+import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import { StoreItem } from "../components/StoreItem";
 
 export function Store(){
-    const [items, setItems] = useState([]);
-    const URL =
-      "https://api.mercadolibre.com/sites/MLA/search?q=juegos-de-mesa+tablero";
-    
 
-    useEffect(()=>{
-        const fetchData = async () => {
-        const result = await axios.get(URL).catch(err=> console.log(err));
-        setItems(result.data.results);
-    }
-      fetchData();
-}, [URL])
+    const {items} = useContext(ShoppingCartContext)
 
     return (
       <div className="section">

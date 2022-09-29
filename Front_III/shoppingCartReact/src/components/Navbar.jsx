@@ -4,7 +4,7 @@ import { ShoppingCartContext } from "../context/ShoppingCartContext";
 
 export function Navbar(){
 
-  const { openCart, cartQuantity } = useContext(ShoppingCartContext);
+  const { isOpen, openCart, cartQuantity } = useContext(ShoppingCartContext);
     return (
       <>
         <nav className="navbar">
@@ -19,7 +19,7 @@ export function Navbar(){
               Acerca de
             </Link>
           </div>
-          <button onClick={openCart}>
+          {!isOpen && <button onClick={openCart}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="30"
@@ -32,7 +32,7 @@ export function Navbar(){
             <div className="counter">
               {cartQuantity}
             </div>
-          </button>
+          </button>}
         </nav>
       </>
     );

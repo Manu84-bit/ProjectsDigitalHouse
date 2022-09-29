@@ -174,7 +174,7 @@ body {
   font-weight: 600;
 }
 
-#btn-remove {
+#btn-remove, #close-cart, #remove-item {
   display: block;
   padding-inline: 0.4rem;
   padding-block: 0.5rem;
@@ -185,15 +185,84 @@ body {
   background-color: var(--counter-bg);
   box-shadow: 0 3px 10px #c9c9c9;
   width: fit-content;
+  height: 2rem;
 }
 
-button:active {
-  box-shadow: none;
-  transition: 0.3s;
+#remove-item {
+  margin-left: 2rem;
 }
 
 .big-font {
   font-size: 1.2rem;
+}
+
+.cart-modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.cart-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 2rem;
+  border: 1px solid #888;
+  border-radius: 8px;
+  width: 90%; /* Could be more or less, depending on screen size */
+}
+
+.cart-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  margin-top: 1rem;
+}
+
+.cart-body {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-start;
+}
+
+
+.stack-cart-table{
+  margin-top: 2rem;
+  padding-inline: 2rem;
+  width: 100%;
+}
+
+.stack-cart-table td {
+  text-align: center;
+  padding-left: 1rem;
+}
+
+.td-title{
+  width: 50%;
+  color: var(--secondary-font-color);
+}
+
+.stack-cart-table img {
+  width: 4rem;
+  height: auto;
+}
+
+.price-per-product{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+button:active, #btn-remove:active, #close-cart:active, #remove-item:active {
+  box-shadow: none;
+  transition: 0.3s;
 }
 
 @media(max-width: 550px){
@@ -209,4 +278,26 @@ button:active {
   padding-top: 0.1rem;
   font-size: 0.2rem;
 }
+.cart-content {
+  width: 99%; 
+  margin: 0.2rem;
+  padding: 0;
+  padding-bottom: 0.5rem;
+}
+
+.stack-cart-table{
+  width: 95%;
+  padding: 0.2rem;
+} 
+
+.stack-cart-table td{
+  text-align: left;
+  padding: 0;
+}
+
+td button {
+  font-size: 0.6rem;
+}
+
+
 }

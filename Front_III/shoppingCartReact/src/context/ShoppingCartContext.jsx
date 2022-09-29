@@ -1,11 +1,24 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 export const ShoppingCartContext = createContext();
-
+import { ShoppingCart } from "../components/ShoppingCart";
 
 export function ShoppingCartProvider({children}){
 
   const [cartItems, setCartItems]= useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [items, setItems] = useState([]);
+
+  const URL =
+    "https://api.mercadolibre.com/sites/MLA/search?q=juegos-de-mesa+tablero";
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get(URL).catch(err => console.log(err));
+      setItems(result.data.results);
+    };
+    fetchData();
+  }, [URL]);
 
 
   const cartQuantity = cartItems.reduce((quantity, citem)=>
@@ -34,7 +47,7 @@ export function ShoppingCartProvider({children}){
 
   function decreaseCartQuantity(id) {
     setCartItems(prev => {
-      if (prev.find(citem => citem.id)?.quantity == 1) {
+      if (prev.find(citem => citem.id)?.quantity === 0) {
         return prev.filter(citem => {
           citem.id !== id;
         });
@@ -56,7 +69,6 @@ export function ShoppingCartProvider({children}){
     })
   }
 
-  
   function openCart(){
     setIsOpen(true)
   }
@@ -67,6 +79,8 @@ export function ShoppingCartProvider({children}){
     return (
       <ShoppingCartContext.Provider
         value={{
+          items,
+          isOpen,
           openCart,
           closeCart,
           cartItems,
@@ -77,6 +91,7 @@ export function ShoppingCartProvider({children}){
           removeFromCart,
         }}
       >
+        {isOpen && <ShoppingCart />}
         {children}
       </ShoppingCartContext.Provider>
     ); 
