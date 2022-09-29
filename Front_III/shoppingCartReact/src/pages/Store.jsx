@@ -20,7 +20,7 @@ export function Store(){
       <div className="section">
         <h1>Juegos de mesa</h1>
         <div className="store-container">
-          {items.map((item, index) => (
+          {items.map(item => (
             <div className="card" key={item.id}>
               <StoreItem {...item} />
             </div>

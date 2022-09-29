@@ -1,22 +1,14 @@
-import { useState } from "react";
+
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import { formatCurrency } from "../util/formatCurency";
 
-export function StoreItem({ title, price, thumbnail }) {
+export function StoreItem({id, title, price, thumbnail }) {
 
-  const [quantity, setQuantity] = useState(0);
+const { getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart} = useContext(ShoppingCartContext);
 
-  function addItems(){
-    setQuantity((prev)=> prev+1);
-  }
-
-  function removeItems() {
-    setQuantity(prev => prev>0? prev-1: prev);
-  }
-
-  function clearItems(){
-    setQuantity(0);
-  }
+const quantity = getItemQuantity(id)
 
   return (
     <>
@@ -27,20 +19,24 @@ export function StoreItem({ title, price, thumbnail }) {
       <h5>{formatCurrency(price)}</h5>
       <div className="card-btns">
         {quantity < 1 ? (
-          <button id="add-btn" onClick={addItems}>
+          <button id="add-btn" onClick={() =>{
+              increaseCartQuantity(id);
+          } }>
             + Agregar al carro
           </button>
         ) : (
           <>
             <div className="cart-btns">
-              <button onClick={removeItems}>-</button>
+              <button onClick={() => decreaseCartQuantity(id)}>-</button>
               <span>
                 {" "}
                 <span className="big-font">{quantity} </span>en el carro{" "}
               </span>
-              <button onClick={addItems}> +</button>
+              <button onClick={() =>{
+                  increaseCartQuantity(id);
+              } }> +</button>
             </div>
-            <button id="btn-remove" onClick={clearItems}>
+            <button id="btn-remove" onClick={()=>removeFromCart(id)}>
               Remover todos
             </button>
           </>
