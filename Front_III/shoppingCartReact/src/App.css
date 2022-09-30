@@ -174,7 +174,7 @@ body {
   font-weight: 600;
 }
 
-#btn-remove, #close-cart, #close-detail {
+#btn-remove, #close-cart {
   display: block;
   padding-inline: 0.4rem;
   padding-block: 0.5rem;
@@ -218,13 +218,17 @@ body {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
-.cart-content {
+.cart-content, .product-content {
   background-color: #fefefe;
   margin: 15% auto; 
   padding: 2rem;
   border: 1px solid #888;
   border-radius: 8px;
   width: 90%; 
+}
+
+.product-content h4, .product-content img {
+  padding-left: 3rem;
 }
 
 .cart-header {

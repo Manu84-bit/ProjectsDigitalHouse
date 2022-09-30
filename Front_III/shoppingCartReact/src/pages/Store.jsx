@@ -11,7 +11,10 @@ export function Store(){
         <div className="store-container">
           {items.map(item => (
             <div className="card" key={item.id}>
-              <StoreItem {...item} />
+              <StoreItem
+                {...item}
+                attributes={item.attributes[1].values[0].name}
+              />
             </div>
           ))}
         </div>

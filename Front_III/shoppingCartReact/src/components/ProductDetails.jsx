@@ -1,22 +1,25 @@
-import { useContext } from "react"
-import { ShoppingCartContext } from "../context/ShoppingCartContext"
 
-export const ProductDetails = ({ id, title, price, available_quantity, condition}) => {
-  const { closeDetail} = useContext(ShoppingCartContext);
+
+export const ProductDetails = ({ title, price, thumbnail, available_quantity, condition, closeProductDetail, marca}) => {
 
   return (
     <div className="modal">
       <h4>Product Details</h4>
 
       <div className="product-content">
-        <h2>{title}</h2>
-        <h2>{price}</h2>
-        <h2>{available_quantity}</h2>
-        <h2>{condition}</h2>
+        <div className="cart-header">
+          <h3>{title}</h3>
+          <button id="close-cart" onClick={closeProductDetail}>
+            x
+          </button>
+        </div>
+
+        <img src={thumbnail} alt={title} />
+        <h4>Precio unitario ${price}</h4>
+        <h4>Marca: {marca}</h4>
+        <h4>Unidades disponibles: {available_quantity}</h4>
+        <h4>Estado: {condition}</h4>
       </div>
-      <button id="close-detail" onClick={()=>closeDetail(id)}>
-        x
-      </button>
     </div>
   );
 };
