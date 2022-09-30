@@ -2,12 +2,14 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 export const ShoppingCartContext = createContext();
 import { ShoppingCart } from "../components/ShoppingCart";
+import { useLocalStorage } from "../customHooks/useLocalStorage";
 
 export function ShoppingCartProvider({children}){
 
-  const [cartItems, setCartItems]= useState([]);
-  const [isOpen, setIsOpen] = useState(false);
+  // const [cartItems, setCartItems]= useState([]);
+  const [cartItems, setCartItems]= useLocalStorage("shopping-cart",[]);
   const [items, setItems] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
 
   const URL =
     "https://api.mercadolibre.com/sites/MLA/search?q=juegos-de-mesa+tablero";
@@ -47,10 +49,10 @@ export function ShoppingCartProvider({children}){
 
   function decreaseCartQuantity(id) {
     setCartItems(prev => {
-      if (prev.find(citem => citem.id)?.quantity === 0) {
-        return prev.filter(citem => {
-          citem.id !== id;
-        });
+      if (prev.find(citem => citem.id===id)?.quantity === 1) {
+        return prev.filter(citem => 
+          citem.id !== id
+        )
       } else {
         return prev.map(citem => {
           if (citem.id === id) {
@@ -75,7 +77,8 @@ export function ShoppingCartProvider({children}){
   function closeCart(){
     setIsOpen(false)
   }
-  
+
+
     return (
       <ShoppingCartContext.Provider
         value={{

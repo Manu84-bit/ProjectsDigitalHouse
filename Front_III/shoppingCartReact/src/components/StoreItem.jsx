@@ -27,7 +27,7 @@ const quantity = getItemQuantity(id)
         ) : (
           <>
             <div className="cart-btns">
-              <button onClick={() => decreaseCartQuantity(id)}>-</button>
+              <button onClick={() =>  decreaseCartQuantity(id)}>-</button>
               <span>
                 {" "}
                 <span className="big-font">{quantity} </span>en el carro{" "}

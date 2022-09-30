@@ -3,7 +3,6 @@ import { ShoppingCartContext } from "../context/ShoppingCartContext";
 import { StoreItem } from "../components/StoreItem";
 
 export function Store(){
-
     const {items} = useContext(ShoppingCartContext)
 
     return (
